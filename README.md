@@ -1,2 +1,4 @@
 # Pong
-This repo is essentially a showcase for [C#](https://github.com/dancinoman/Pong/tree/main/Assets/Scripts)
+Show case of [C#](https://github.com/dancinoman/Pong/tree/main/Assets/Scripts).</br>
+Game result of [Pong](https://simmer.io/@Dancinoman/pong).
+
