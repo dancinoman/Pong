@@ -2,27 +2,29 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Provides ball behavior
 public class Ball : MonoBehaviour
 {
-    bool oneTimeLost = false;
-    private Rigidbody2D rb2d;
-    public float velocity;
+
+    private GameController gc;
     private GameObject gameController;
+    private GameObject player1;
     private GameObject player2;
     private Player2 pl2;
-    private GameController gc;
-    public float ampDir;
-    private float fasterNFaster = 0;
-    private bool switchDir;
-    private bool firstShot = true;
+    private Rigidbody2D rb2d;
+
     private Vector3 oldPosition;
     private Vector2 distance;
     private Vector2 padPos;
-    private GameObject player1;
-    private bool recordOneTime = false;
-    
-    
 
+
+    public float velocity;
+    public float ampDir;
+    private float fasterNFaster = 0;
+    private bool oneTimeLost = false;
+    private bool switchDir;
+    private bool firstShot = true;
+    private bool recordOneTime = false;
 
     // Start is called before the first frame update
     void Start()
@@ -36,17 +38,18 @@ public class Ball : MonoBehaviour
         GiveBallVelocity(velocity);
     }
 
-    // Update is called once per frame
+    // Build-in FixedUpdate is called once every regular frame
     void FixedUpdate()
     {
+        // Check if the ball reached a goal net
         if(transform.position.x > 7.4f && !oneTimeLost) {MatchScored(0);}
-
         if(transform.position.x < -7.4f && !oneTimeLost) {MatchScored(1);}
-       
     }
 
+    // Build-in Update is called once every frame
     private void Update()
     {
+        // Record position to calculate velocity
         distance = transform.position - player1.transform.position;
         if(distance.x > -0.4f && !recordOneTime)
         {
@@ -54,6 +57,8 @@ public class Ball : MonoBehaviour
             recordOneTime = true;
         }
     }
+
+    // When score, fire MatchScored and apply actions
     private void MatchScored(int index)
     {
         gc.PlayAudio(2);
@@ -62,11 +67,12 @@ public class Ball : MonoBehaviour
         Destroy(GameObject.FindGameObjectWithTag("Ball Parent"));
     }
 
-    private void GiveBallVelocity(float ballVelocity) 
+    // Give ball behavior
+    private void GiveBallVelocity(float ballVelocity)
     {
         float startDirection = transform.position.y;
         float incorrectDirection = 0.39f;
-        
+
         if (!firstShot)
         {
             rb2d.AddForce(new Vector2(-1, startDirection) * ballVelocity, ForceMode2D.Impulse);
@@ -80,7 +86,7 @@ public class Ball : MonoBehaviour
 
             if (gc.mode != "Survival" && !gc.player1Turn)
             {
-                
+
                 rb2d.AddForce(new Vector2(-1, startDirection) * ballVelocity, ForceMode2D.Impulse);
                 gc.player1Turn = true;
                 pl2.invincibleStart = true;
@@ -93,10 +99,10 @@ public class Ball : MonoBehaviour
 
             firstShot = false;
         }
-        
-    }
-   
 
+    }
+
+    // Collision event for the ball
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Player1" || collision.gameObject.tag == "Player2")
@@ -126,8 +132,8 @@ public class Ball : MonoBehaviour
                 fasterNFaster += 0.04f;
                 GiveBallVelocity(fasterNFaster);
             }
-            
-            
+
+
         }
 
     }

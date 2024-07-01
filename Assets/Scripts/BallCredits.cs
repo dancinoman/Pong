@@ -2,18 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// BallCredit is spreads ball every where for an art effect
 public class BallCredits : MonoBehaviour
 {
-    bool oneTimeForce = true;
-    private Rigidbody2D rb2d;
-    public float velocity;
     private GameController gc;
+    private Rigidbody2D rb2d;
+
+    public float velocity;
     public float ampDir;
+    private bool oneTimeForce = true;
     private bool firstShot = true;
-
-
-
-
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -31,25 +30,10 @@ public class BallCredits : MonoBehaviour
 
     }
 
-    private void Update()
-    {
-      
-    }
-
     private void GiveBallVelocity()
     {
         float startDirection = 0;
         float incorrectDirection = 0f;
-
-        if (firstShot)
-        {
-
-         /*   while (startDirection < incorrectDirection && startDirection > -incorrectDirection)
-            {
-                startDirection = Random.Range(-ampDir, ampDir);
-            }
-            firstShot = false;*/
-        }
         startDirection = Random.Range(-ampDir, ampDir);
 
         rb2d.velocity = Vector2.zero;

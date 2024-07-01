@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Player1 is typically the standard first player of the game which is the player
 public class Player1 : MonoBehaviour
 {
-    public float speed;
     private Rigidbody2D rb2d;
+
+    public float speed;
     public float yMin;
     public float yMax;
 
@@ -18,8 +20,6 @@ public class Player1 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-
         //Binding movements with mouse control
         if (Input.GetMouseButton(0))
         {
@@ -34,8 +34,5 @@ public class Player1 : MonoBehaviour
             transform.position = new Vector2(transform.position.x, transform.position.y);
             rb2d.velocity = Vector2.zero;
         }
-        
-        
-      
     }
 }
