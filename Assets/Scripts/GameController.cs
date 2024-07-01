@@ -4,35 +4,40 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
 
+// GameController manages all script together
 public class GameController : MonoBehaviour
 {
     //The PC is first and Com is the second
     public bool[] playerLost = new bool[] { false, false } ;
+
     //Pad collision, Wall collision and Ball lost
     public AudioClip[] soundEffect = new AudioClip[3];
-    public string mode;
-    public int numberHits;
+
     public GameObject ball;
     public GameObject player1TextGO;
     public GameObject player2TextGO;
     public GameObject timeDisplay;
     public GameObject gameOverOb;
+
     private TextMeshProUGUI player1Text;
     private TextMeshProUGUI player2Text;
     private TextMeshProUGUI timeText;
     private TextMeshProUGUI gameOverText;
+    private AudioSource gAudio;
+
+    public bool player1Turn = true;
+    private bool gameOver = false;
+    private bool checkTimer = false;
+    public int numberHits;
     private int player1Score = 0;
     private int player2Score = 0;
-    private AudioSource gAudio;
     private float timeFromStart;
-    private bool gameOver = false;
-    public bool player1Turn = true;
-    private bool checkTimer = false;
     private float timerStart = 0;
+    public string mode;
+
     // Start is called before the first frame update
     void Start()
     {
-
         player1Text = player1TextGO.GetComponent<TextMeshProUGUI>();
         player2Text = player2TextGO.GetComponent<TextMeshProUGUI>();
         if(timeDisplay != null) { timeText = timeDisplay.GetComponent<TextMeshProUGUI>(); }
@@ -66,13 +71,13 @@ public class GameController : MonoBehaviour
                 player1Text.text = player1Score.ToString();
                 playerLost[1] = false;
             }
-            
+
         }
 
         //Game over
         if(mode == "Survival")
         {
-            
+
             if (!gameOver)
             {
                 if (!checkTimer)
@@ -87,7 +92,7 @@ public class GameController : MonoBehaviour
             {
                 SceneManager.LoadScene(2);
             }
-            
+
 
             if (playerLost[0])
             {
@@ -96,12 +101,13 @@ public class GameController : MonoBehaviour
                 playerLost[0] = false;
                 gameOver = true;
 
-                
+
             }
         }
-       
+
     }
 
+    // Play any audio in list
     public void PlayAudio(int index)
     {
         gAudio.clip = soundEffect[index];

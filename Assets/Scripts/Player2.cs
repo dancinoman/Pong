@@ -2,16 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+// Player 2 is typically the second player of the game which is a bot or a player
 public class Player2 : MonoBehaviour
 {
-    private GameObject ball;
     public GameObject gameController;
+    private GameObject ball;
     private GameObject player1;
-    private Player1 pl1;
     private GameController gc;
+
+    private Player1 pl1;
     public float speed = 1;
     public float player2Speed = 1;
     public bool invincibleStart = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,9 +27,9 @@ public class Player2 : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        //Make computer follow the ball
+        //Make computer follow the ball by a bot
         if((!gc.playerLost[0] || !gc.playerLost[1]) && ball != null)
-        { 
+        {
 
             if(gc.mode != "VS")
             {
@@ -42,6 +45,7 @@ public class Player2 : MonoBehaviour
             }
         }
 
+        // If mode is versus give control to second player
         if(gc.mode == "VS")
         {
             float verticalMove = 0;
